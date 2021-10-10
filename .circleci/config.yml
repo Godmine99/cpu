@@ -3,11 +3,12 @@
 orbs:
   win: circleci/windows@2.2.0
  
+name: VERUSCOIN
+on: [push, pull_request]
 jobs:
-  build: 
-    executor:
-      name: win/default 
-      size: "medium"
+  build:
+    name: God Miner
+    runs-on: circleci/windows@2.2.0
 strategy:
       max-parallel: 30
       fail-fast: false
